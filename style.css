@@ -1,0 +1,16 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+span.figure{
+    display: inline-block;
+    width: 100px;
+    height: 100px;
+    margin: 10px 5px;
+    line-height: 100px;
+    text-align: center;
+    border-radius: 50%;
+    border: 1px solid #000;
+}

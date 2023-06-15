@@ -3,25 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
     <title>Document</title>
+
 </head>
 <body>
     <div class="gameBoard">
-        <span data-option="ogień">ogień</span>
-        <span data-option="kamień">kamień</span>
-        <span data-option="nożyce">nożyce</span>
-        <span data-option="wąż">wąż</span>
-        <span data-option="człowiek">człowiek</span>
-        <span data-option="drzewo">drzewo</span>
-        <span data-option="wilk">wilk</span>
-        <span data-option="szpony">szpony</span>
-        <span data-option="papier">papier</span>
-        <span data-option="powietrze">powietrze</span>
-        <span data-option="woda">woda</span>
-        <span data-option="smoki">smoki</span>
-        <span data-option="diabeł">diabeł</span>
-        <span data-option="błyskawica">błyskawica</span>
-        <span data-option="pistolet">pistolet</span>
+        <span class="figure" data-option="ogień">ogień</span>
+        <span class="figure" data-option="kamień">kamień</span>
+        <span class="figure" data-option="nożyce">nożyce</span>
+        <span class="figure" data-option="wąż">wąż</span>
+        <span class="figure" data-option="człowiek">człowiek</span>
+        <span class="figure" data-option="drzewo">drzewo</span>
+        <span class="figure" data-option="wilk">wilk</span>
+        <span class="figure" data-option="szpony">szpony</span>
+        <span class="figure" data-option="papier">papier</span>
+        <span class="figure" data-option="powietrze">powietrze</span>
+        <span class="figure" data-option="woda">woda</span>
+        <span class="figure" data-option="smoki">smoki</span>
+        <span class="figure" data-option="diabeł">diabeł</span>
+        <span class="figure" data-option="błyskawica">błyskawica</span>
+        <span class="figure" data-option="pistolet">pistolet</span>
+    </div>
+    <div class="gameStatus">
+        <p>Wybór gracza: <span class="playerChoice"></span></p>
+        <p>Wybór komputera: <span class="computerChoice"></span></p>
+        <p>Wynik Potyczki: <span class="battleResult"></span></p>
+    </div>
+    <div class="summary">
+        <p>Wygrane <span class="win">0</span></p>
+        <p>Przegrane <span class="losses">0</span></p>
+        <p>Remisy <span class="draw">0</span></p>
     </div>
     
     <button class="start">Start</button>

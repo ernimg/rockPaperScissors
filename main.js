@@ -1,4 +1,5 @@
 const btnStart = document.querySelector('.start');
+const figuresLis = [...document.querySelectorAll('span')];
 
 const figureRules = [
     {
@@ -61,12 +62,12 @@ const figureRules = [
         name: 'pistolet',
         win: ['kamień','ogień','nożyce','wąż','człowiek','drzewo','wilk'],
     }
-]
+];
 
 const selectedFigur = {
-    player: 'ogień',
+    player: '',
     computer: ''
-}
+};
 
 
 const gameStatus = {
@@ -74,12 +75,15 @@ const gameStatus = {
     losses: 0,
     draw: 0,
 
-}
+};
 
 function randomChoice(){
     const indexFigur = Math.floor(Math.random() * figureRules.length);
+    figuresLis.forEach(figure => {
+        figure.dataset.option === figureRules[indexFigur].name ? figure.style.boxShadow = 'rgba(255, 0,0, 0.5) 0 1px 13px': null;
+    });
     return figureRules[indexFigur].name;
-}
+};
 
 function checkingWiners(player , computer){
    if (player === computer) {
@@ -97,7 +101,14 @@ function checkingWiners(player , computer){
    }else{
     gameStatus.losses++;
    }
+};
+const updateBoar = ()=>{
+    document.querySelector('.win').textContent = gameStatus.win;
+    document.querySelector('.losses').textContent = gameStatus.losses;
+    document.querySelector('.draw').textContent = gameStatus.draw;
+    
 }
+
 const startGame = ()=>{
 
     if(!selectedFigur.player) return window.alert('Nie wybrano figury');
@@ -105,9 +116,20 @@ const startGame = ()=>{
     const computerChoice = randomChoice();
 
     checkingWiners(selectedFigur.player, computerChoice)
-
+    updateBoar();
     console.log(`Wygrana ${gameStatus.win} przegrane ${gameStatus.losses} remisy ${gameStatus.draw}`);
 
-}
+
+};
+
+function selectPlayer(){
+    console.log(this);
+    const player = this.dataset.option;
+    console.log(player);
+    figuresLis.forEach(figure => figure.style.boxShadow ='');
+    selectedFigur.player = player;
+    this.style.boxShadow = 'rgba(0, 0, 255, 0.5) 0 1px 13px';
+};
 
 btnStart.addEventListener('click',startGame);
+figuresLis.forEach(item => item.addEventListener('click',selectPlayer))
