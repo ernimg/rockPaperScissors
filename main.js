@@ -74,7 +74,6 @@ const gameStatus = {
     win: 0,
     losses: 0,
     draw: 0,
-
 };
 
 function randomChoice(){
@@ -82,12 +81,15 @@ function randomChoice(){
     figuresLis.forEach(figure => {
         figure.dataset.option === figureRules[indexFigur].name ? figure.style.boxShadow = 'rgba(255, 0,0, 0.5) 0 1px 13px': null;
     });
+    selectedFigur.computer = figureRules[indexFigur].name;
+    document.querySelector('.computerChoice').textContent= selectedFigur.computer;
     return figureRules[indexFigur].name;
 };
 
 function checkingWiners(player , computer){
    if (player === computer) {
         gameStatus.draw++;
+        document.querySelector('.battleResult').textContent = 'Remis :|';
    }
    
    console.log('gracz: ' +  player);
@@ -98,23 +100,21 @@ function checkingWiners(player , computer){
    const checkArr = dependenceArr.indexOf(computer);
    if(checkArr != -1){
     gameStatus.win++;
+    document.querySelector('.battleResult').textContent = 'Wygrana :)';
    }else{
     gameStatus.losses++;
+    document.querySelector('.battleResult').textContent = 'Przegrana :<';
    }
 };
 const updateBoar = ()=>{
     document.querySelector('.win').textContent = gameStatus.win;
     document.querySelector('.losses').textContent = gameStatus.losses;
     document.querySelector('.draw').textContent = gameStatus.draw;
-    
 }
 
 const startGame = ()=>{
-
     if(!selectedFigur.player) return window.alert('Nie wybrano figury');
-
     const computerChoice = randomChoice();
-
     checkingWiners(selectedFigur.player, computerChoice)
     updateBoar();
     console.log(`Wygrana ${gameStatus.win} przegrane ${gameStatus.losses} remisy ${gameStatus.draw}`);
@@ -123,11 +123,12 @@ const startGame = ()=>{
 };
 
 function selectPlayer(){
-    console.log(this);
+    document.querySelector('.computerChoice').textContent='';
+    document.querySelector('.battleResult').textContent = '';
     const player = this.dataset.option;
-    console.log(player);
     figuresLis.forEach(figure => figure.style.boxShadow ='');
     selectedFigur.player = player;
+    document.querySelector('.playerChoice').textContent= selectedFigur.player;
     this.style.boxShadow = 'rgba(0, 0, 255, 0.5) 0 1px 13px';
 };
 
