@@ -66,7 +66,7 @@ const figureRules = [
 
 const selectedFigur = {
     player: '',
-    computer: ''
+    computer: '',
 };
 
 
@@ -89,42 +89,57 @@ function randomChoice(){
 function checkingWiners(player , computer){
    if (player === computer) {
         gameStatus.draw++;
-        document.querySelector('.battleResult').textContent = 'Remis :|';
-   }
-   
+        return 'Remis :|';
+    }   
    console.log('gracz: ' +  player);
    console.log('komputer: ' + computer);
    let dependenceArr;
    figureRules.forEach(figure =>  figure.name == player ? dependenceArr = figure.win:null);
    console.log(dependenceArr);
-   const checkArr = dependenceArr.indexOf(computer);
-   if(checkArr != -1){
+   const checkArr = dependenceArr.includes(computer);
+   if(checkArr){
     gameStatus.win++;
-    document.querySelector('.battleResult').textContent = 'Wygrana :)';
+    return 'Wygrana :)';
    }else{
     gameStatus.losses++;
-    document.querySelector('.battleResult').textContent = 'Przegrana :<';
+    return 'Przegrana :<';
    }
 };
-const updateBoar = ()=>{
+const updateBoar = (gameResult)=>{
     document.querySelector('.win').textContent = gameStatus.win;
     document.querySelector('.losses').textContent = gameStatus.losses;
     document.querySelector('.draw').textContent = gameStatus.draw;
+    document.querySelector('.computerChoice').textContent = selectedFigur.computer;
+    switch (gameResult) {
+        case 'Remis :|':
+            document.querySelector('.battleResult').textContent = gameResult;
+            break;
+        case 'Wygrana :)':
+            document.querySelector('.battleResult').textContent = gameResult;
+            break;
+        case 'Przegrana :<':
+            document.querySelector('.battleResult').textContent = gameResult;
+            break;
+        default:
+            break;
+    }
+    
 }
 
 const startGame = ()=>{
     if(!selectedFigur.player) return window.alert('Nie wybrano figury');
     const computerChoice = randomChoice();
-    checkingWiners(selectedFigur.player, computerChoice)
-    updateBoar();
+    const result = checkingWiners(selectedFigur.player, computerChoice);
+    updateBoar(result);
     console.log(`Wygrana ${gameStatus.win} przegrane ${gameStatus.losses} remisy ${gameStatus.draw}`);
-
-
 };
 
 function selectPlayer(){
-    document.querySelector('.computerChoice').textContent='';
-    document.querySelector('.battleResult').textContent = '';
+    if(selectedFigur.computer){
+        document.querySelector('.battleResult').textContent ='';
+        selectedFigur.computer ='';
+        document.querySelector('.computerChoice').textContent = selectedFigur.computer;
+    }
     const player = this.dataset.option;
     figuresLis.forEach(figure => figure.style.boxShadow ='');
     selectedFigur.player = player;
