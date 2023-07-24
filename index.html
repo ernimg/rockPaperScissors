@@ -66,14 +66,22 @@
         </div>
         <div>
           <button @click="starGame">Start</button><button>Poddanie</button>
-          <button>Reset</button>
+          <button @click="reset">Reset</button>
         </div>
       </section>
-      <section class="container gameSummary">
+      <section v-if="!active" class="container gameSummary">
         <ul class="summary">
           <li v-for="log in gameLog">
-            {{log.action}} - {{log.actionType}} - {{log.actionValuePlayer}} -
-            {{log.actionComputerValue}} - {{log.actionWho}}
+            <span>Runda: #{{log.action}} </span>
+            <span
+              >Wynik potyczki:
+              <span
+                :class="['draw', {win: log.actionType === 'wygrana' ? true:false},{lose:log.actionType === 'przegrana' ? true:false}]"
+                >{{log.actionType}}</span
+              ></span
+            ><span></span>
+              Punkty życia gracza: <span>{{log.actionValuePlayer}}</span></span
+            ><span> Punkty życia komputera: <span>{{log.actionComputerValue}}</span></span>
           </li>
         </ul>
       </section>

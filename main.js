@@ -88,15 +88,15 @@ const app = Vue.createApp({
                 case 'wygrana':
                     const dmgPlayer = getRandomValue(7,18);
                     this.computerLive -= dmgPlayer;
-                    this.addLogGame(this.gameCounter,'wygrana',this.playerLive,this.computerLive,this.gameWinner);
+                    this.addLogGame(this.gameCounter,'wygrana',this.playerLive,this.computerLive);
                     break;
                 case 'przegrana':
                     const dmgComputer = getRandomValue(6,15);
                     this.playerLive -= dmgComputer;
-                    this.addLogGame(this.gameCounter,'przegrana',this.playerLive,this.computerLive,this.gameWinner);
+                    this.addLogGame(this.gameCounter,'przegrana',this.playerLive,this.computerLive);
                     break;
                 case 'remis':
-                    this.addLogGame(this.gameCounter,'remis',this.playerLive,this.computerLive,this.gameWinner);
+                    this.addLogGame(this.gameCounter,'remis',this.playerLive,this.computerLive);
                     break;
                 default:
                     break;
@@ -135,7 +135,7 @@ const app = Vue.createApp({
         toggleMesageButton(){
             if(this.win === 'remis') return 'natrafiłeś na godnego przeciwnika graj dalej!'
             return this.win === 'wygrana' ? 'Jej idzie Ci świetnie graj dale!': ' Nie przejmuj się może następnym razem!';
-        }
+        },
     },
     methods: {
         handleUserSelect(figureName){
@@ -149,21 +149,32 @@ const app = Vue.createApp({
             if(this.userSelected ==='')return alert('Gracz nie wybrał jeszcze figury!!');
             this.computerDraw();
             this.gameCounter++;
-            this.active = !this.active;
+            this.activeBtn = !this.activeBtn 
+            setTimeout(()=>{
+                this.active = !this.active;
+            },2000);
+            
         },
         activeBoard(){
             this.active = !this.active;
+            this.activeBtn = !this.activeBtn;
             this.computerSelected = '';
             this.userSelected = '';
         },
-        addLogGame(round,what,val1,val2,who = 'walka nadal trwa...'){
+        addLogGame(round,what,val1,val2,who){
             this.gameLog.unshift({
                 action:round,
                 actionType:what,
                 actionValuePlayer:val1,
                 actionComputerValue:val2,
-                actionWho: who
             });
+        },
+        reset(){
+            this.gameLog = [];
+            this.computerLive = 100;
+            this.playerLive = 100;
+            this.active = true;
+            this.gameCounter = 0;
         }
     },
 
