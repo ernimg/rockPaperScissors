@@ -77,7 +77,8 @@ const app = Vue.createApp({
             computerLive: 100,
             playerLive: 100,
             active: true,
-            gameWinner:''
+            gameWinner:'',
+            gameLog: [],
  
         }
     },
@@ -87,12 +88,16 @@ const app = Vue.createApp({
                 case 'wygrana':
                     const dmgPlayer = getRandomValue(7,18);
                     this.computerLive -= dmgPlayer;
-                    console.log('życie komputera' +  this.computerLive);
+                    this.addLogGame(this.gameCounter,'wygrana',this.playerLive,this.computerLive,this.gameWinner);
                     break;
                 case 'przegrana':
                     const dmgComputer = getRandomValue(6,15);
                     this.playerLive -= dmgComputer;
-                    console.log('zycie gracza' +  this.playerLive);
+                    this.addLogGame(this.gameCounter,'przegrana',this.playerLive,this.computerLive,this.gameWinner);
+                    break;
+                case 'remis':
+                    this.addLogGame(this.gameCounter,'remis',this.playerLive,this.computerLive,this.gameWinner);
+                    break;
                 default:
                     break;
             }
@@ -119,6 +124,7 @@ const app = Vue.createApp({
             }else{
                 return 'przegrana';
             }
+            
         },
         setPlayerHealthWidth(){
             return {width: this.playerLive + '%'};
@@ -149,6 +155,15 @@ const app = Vue.createApp({
             this.active = !this.active;
             this.computerSelected = '';
             this.userSelected = '';
+        },
+        addLogGame(round,what,val1,val2,who = 'walka nadal trwa...'){
+            this.gameLog.unshift({
+                action:round,
+                actionType:what,
+                actionValuePlayer:val1,
+                actionComputerValue:val2,
+                actionWho: who
+            });
         }
     },
 

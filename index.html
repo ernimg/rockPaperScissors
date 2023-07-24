@@ -10,7 +10,7 @@
   </head>
   <body>
     <div id="game">
-      <section class="display">
+      <section v-if="active" class="display">
         <h2>Runda: {{gameCounter}}</h2>
         <div class="hpWrapper">
           <section id="computer" class="container">
@@ -70,11 +70,12 @@
         </div>
       </section>
       <section class="container gameSummary">
-        <div class="summary">
-          <p>Wygrane <span class="win">0</span></p>
-          <p>Przegrane <span class="losses">0</span></p>
-          <p>Remisy <span class="draw">0</span></p>
-        </div>
+        <ul class="summary">
+          <li v-for="log in gameLog">
+            {{log.action}} - {{log.actionType}} - {{log.actionValuePlayer}} -
+            {{log.actionComputerValue}} - {{log.actionWho}}
+          </li>
+        </ul>
       </section>
     </div>
   </body>
