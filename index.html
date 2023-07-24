@@ -1,42 +1,81 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="main.js" defer></script>
     <title>Document</title>
-
-</head>
-<body>
-    <div class="gameBoard">
-        <span class="figure" data-option="ogień">ogień</span>
-        <span class="figure" data-option="kamień">kamień</span>
-        <span class="figure" data-option="nożyce">nożyce</span>
-        <span class="figure" data-option="wąż">wąż</span>
-        <span class="figure" data-option="człowiek">człowiek</span>
-        <span class="figure" data-option="drzewo">drzewo</span>
-        <span class="figure" data-option="wilk">wilk</span>
-        <span class="figure" data-option="szpony">szpony</span>
-        <span class="figure" data-option="papier">papier</span>
-        <span class="figure" data-option="powietrze">powietrze</span>
-        <span class="figure" data-option="woda">woda</span>
-        <span class="figure" data-option="smoki">smoki</span>
-        <span class="figure" data-option="diabeł">diabeł</span>
-        <span class="figure" data-option="błyskawica">błyskawica</span>
-        <span class="figure" data-option="pistolet">pistolet</span>
+  </head>
+  <body>
+    <div id="game">
+      <section class="display">
+        <h2>Runda: {{gameCounter}}</h2>
+        <div class="hpWrapper">
+          <section id="computer" class="container">
+            <h2>Komputer Hp</h2>
+            <div class="healthbar">
+              <div
+                class="healthbar__value"
+                :style="setComputerHealthWidth"
+              ></div>
+            </div>
+            <div class="choice">{{ computerSelected }}</div>
+          </section>
+          <section id="player" class="container">
+            <h2>Gracz Hp</h2>
+            <div class="healthbar">
+              <div class="healthbar__value" :style="setPlayerHealthWidth"></div>
+            </div>
+            <div class="choice">{{ userSelected }}</div>
+          </section>
+        </div>
+      </section>
+      <section v-if="!active" class="container resultBoard">
+        <div v-show="gameWinner === ''">
+          <h2>{{ win }}</h2>
+          <button @click="activeBoard">{{toggleMesageButton}}</button>
+        </div>
+        <div v-show="gameWinner !== ''">
+          <h2>Całą rozgrywkę wygrywa: {{ gameWinner }}</h2>
+        </div>
+      </section>
+      <section v-else="active" class="container optionBoard">
+        <div class="gameBoard">
+          <span
+            v-for="(figure, index) in figureRules "
+            @click="handleUserSelect(figure.name)"
+            class="figure"
+            >{{ figure.name }}</span
+          >
+          <!-- <span @click="selectFigure()" class="figure" data-option="kamień">kamień</span>
+            <span @click="selectFigure()" class="figure" data-option="nożyce">nożyce</span>
+            <span @click="selectFigure()" class="figure" data-option="wąż">wąż</span>
+            <span @click="selectFigure()" class="figure" data-option="człowiek">człowiek</span>
+            <span @click="selectFigure()" class="figure" data-option="drzewo">drzewo</span>
+            <span @click="selectFigure()" class="figure" data-option="wilk">wilk</span>
+            <span @click="selectFigure()" class="figure" data-option="szpony">szpony</span>
+            <span @click="selectFigure()" class="figure" data-option="papier">papier</span>
+            <span @click="selectFigure()" class="figure" data-option="powietrze">powietrze</span>
+            <span @click="selectFigure()" class="figure" data-option="woda">woda</span>
+            <span @click="selectFigure()" class="figure" data-option="smoki">smoki</span>
+            <span @click="selectFigure()"class="figure" data-option="diabeł">diabeł</span>
+            <span @click="selectFigure()" class="figure" data-option="błyskawica">błyskawica</span>
+            <span @click="selectFigure()" class="figure" data-option="pistolet">pistolet</span> -->
+        </div>
+        <div>
+          <button @click="starGame">Start</button><button>Poddanie</button>
+          <button>Reset</button>
+        </div>
+      </section>
+      <section class="container gameSummary">
+        <div class="summary">
+          <p>Wygrane <span class="win">0</span></p>
+          <p>Przegrane <span class="losses">0</span></p>
+          <p>Remisy <span class="draw">0</span></p>
+        </div>
+      </section>
     </div>
-    <div class="gameStatus">
-        <p>Wybór gracza: <span class="playerChoice"></span></p>
-        <p>Wybór komputera: <span class="computerChoice"></span></p>
-        <p>Wynik Potyczki: <span class="battleResult"></span></p>
-    </div>
-    <div class="summary">
-        <p>Wygrane <span class="win">0</span></p>
-        <p>Przegrane <span class="losses">0</span></p>
-        <p>Remisy <span class="draw">0</span></p>
-    </div>
-    
-    <button class="start">Start</button>
-    <script src="main.js"></script>
-</body>
+  </body>
 </html>
